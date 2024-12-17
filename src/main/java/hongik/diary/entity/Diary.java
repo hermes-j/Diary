@@ -7,6 +7,9 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 @Getter @Setter
@@ -15,7 +18,9 @@ public class Diary {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pid;
-
+    private Long id;
     private String content;
+
+    @CreationTimestamp
+    private Date date;
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>글 상세보기</title>
+</head>
+<body>
+    <p th:text="${diary.date}">글 작성일</p>
+    <p th:text="${diary.content}">글 내용</p>
+    <a th:href="@{/diary/modify/{id}(id=${diary.id})}">수정</a>
+    <a th:href="@{/diary/delete/{id}(id=${diary.id})}">삭제</a>
+</body>
+</html>
