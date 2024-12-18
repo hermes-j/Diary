@@ -9,12 +9,26 @@
 24-2 기초데이터베이스 개인프로젝트
 C011181 이형준
 메인 화면
+<div th:if="${loginUser == null}">
+    <p>로그인 후 이용하실 수 있습니다.</p>
+    <form th:action="@{/login}" method="get">
+        <button type="submit">로그인</button>
+    </form>
+</div>
+<div th:if="${loginUser != null}">
+<span th:text="${loginUser.username}"></span>님, 반갑습니다!
+<form th:action="@{/logout}" method="post">
+    <button type="submit">로그아웃</button>
+</form>
+</div>
+<hr>
 <div class="layout">
     <table>
         <thead>
             <tr>
-                <th>번호</th>
+                <th>번호</th> <!-- TODO: 번호 제거, 자기 글만 보이도록 하기 -->
                 <th>내용</th>
+                <th>작성자id</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +37,7 @@ C011181 이형준
                 <td>
                     <a th:text="${diary.content}" th:href="@{/diary/view/{id}(id=${diary.id})}"></a>
                 </td>
+                <td th:text="${diary.writerId}"></td>
             </tr>
         </tbody>
     </table>

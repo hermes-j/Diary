@@ -1,7 +1,9 @@
 package hongik.diary.controller;
 
 import hongik.diary.entity.Diary;
+import hongik.diary.entity.User;
 import hongik.diary.service.DiaryService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,18 +25,27 @@ public class DiaryController {
     }
 
     @PostMapping("/writedo")
-    public String writeDo(@ModelAttribute Diary diary) {
+    public String writeDo(@ModelAttribute Diary diary, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
+        diary.setWriterId(loginUser.getUid());
         diaryService.write(diary);
         return "redirect:/diary/list";
     }
 
     @GetMapping("/list")
     public String list(Model model,
+                       HttpSession session,
                        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Diary> list = diaryService.list(pageable);
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        User loginUser = (User) session.getAttribute("loginUser");
+        model.addAttribute("loginUser", loginUser);
 
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
