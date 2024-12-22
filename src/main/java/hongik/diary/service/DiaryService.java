@@ -36,11 +36,19 @@ public class DiaryService {
     // 게시글 상세보기
     public Diary view(Long id) {
         return diaryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Invalid post ID."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않거나 접근 권한이 없는 포스트입니다.")); // 없는 글
     }
 
     // 글 삭제
-    public void delete(Long id) {
+    public void delete(Long id, Long uid) {
+        Diary diary = diaryRepository.findById(id)
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않거나 접근 권한이 없는 포스트입니다.")); // 없는 글
+
+        // validation
+        if(!diary.getWriterId().equals(uid)) {
+            throw new IllegalStateException("존재하지 않거나 접근 권한이 없는 포스트입니다."); // 타 사용자의 글
+        }
+        // 두 경우의 오류 메시지를 통일하여 포스트의 존재 여부를 파악할 수 없도록 함
         diaryRepository.deleteById(id);
     }
 }

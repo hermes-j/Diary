@@ -14,10 +14,10 @@ import java.util.Date;
 public class Diary {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // primaryKey
     private Long id;
     private String content;
     private Long writerId;
-    @CreationTimestamp
+    @CreationTimestamp // 자동으로 현재 시각으로 저장
     private Date date;
 }

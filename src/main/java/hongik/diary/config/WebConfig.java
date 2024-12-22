@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * addPathPatterns 안의 패턴을 가지는 url에 대하여 LoginInterceptor를 작동.
+ * excludePathPattern 안의 url들에 대해서는 동작하지 않음.
+ */
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {

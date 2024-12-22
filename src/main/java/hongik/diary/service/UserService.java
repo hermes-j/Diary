@@ -14,17 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    public User saveEntity(User user) {
-        return userRepository.save(user);
-    }
-
-    public User saveDTO(UserDTO userDTO) {
-        User user = new User();
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
-        return saveEntity(user);
-    }
-
+    // id/pw가 맞는지 판단
     public boolean login(LoginDTO loginDTO) {
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();
